@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:myapp/data/models/countrycodemodel.dart';
+import 'package:myapp/business_logic/holiday_cubit/holidays_cubit_cubit.dart';
+
 import 'package:myapp/presentation/widget/home/custom_dropdown_yaers.dart';
 import 'package:myapp/presentation/widget/home/custombackground.dart';
 import 'package:myapp/presentation/widget/home/customcircle.dart';
 import 'package:myapp/presentation/widget/home/customtext.dart';
 import 'package:myapp/presentation/widget/home/dropdown.dart';
-import '../../business_logic/cubit/country_cubit.dart';
+import '../../business_logic/country_cubit/country_cubit.dart';
 import '../../core/constant/colorapp.dart';
 import '../../core/constant/image_assets.dart';
-import '../../data/models/countrymodel.dart';
 import '../widget/home/holidays.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,80 +21,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late List<CountriesCodeModel> listOfCountriesCodeModel = [];
-  // String code = "0";
-  // String year = "0";
-  List<CountryModel> listOfCountryModel = [];
   @override
   void initState() {
     super.initState();
-    listOfCountriesCodeModel = BlocProvider.of<CountryCubit>(context)
-        .getCountryCodeFromModelFromCubit();
-    listOfCountryModel = BlocProvider.of<CountryCubit>(context).getList();
+    BlocProvider.of<CountryCubit>(context).getCountryCodeFromModelFromCubit();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColor.backgroundColor, body: _buildHomeBody());
-  }
-
-  _buildDropDownList() {
-    return BlocBuilder<CountryCubit, CountryState>(builder: (context, state) {
-      if (state is CountryCodeLoded) {
-        listOfCountriesCodeModel = (state).listOfCountryCodeModel;
-        return CustomDropDownCountries(
-            listOfCountriesCodeModel: listOfCountriesCodeModel,
-            title: "Choose a city");
-      } else {
-        return CustomDropDownCountries(
-            listOfCountriesCodeModel: listOfCountriesCodeModel,
-            title: "Choose a city Loading");
-      }
-    });
-  }
-
-  _buildDataList() {
-    return Expanded(
-      flex: 3,
-      child: Container(
-          color: AppColor.backgroundColor,
-          child: BlocBuilder<CountryCubit, CountryState>(
-              builder: (context, state) {
-            if (state is SearchHolidaysLoded) {
-              // code = (state).code;
-              // year = (state).year;
-              listOfCountryModel =
-                  BlocProvider.of<CountryCubit>(context).getList();
-              return listOfCountryModel.isEmpty
-                  ? Lottie.asset(AppImageAssets.nodata)
-                  : HolidaysPage(
-                      listOfCountryModel: listOfCountryModel,
-                    );
-            } else {
-              listOfCountryModel =
-                  BlocProvider.of<CountryCubit>(context).getList();
-              return HolidaysPage(
-                listOfCountryModel: listOfCountryModel,
-              );
-            }
-          })),
-    );
-  }
-
-  _buildDropDownBody() {
-    return Expanded(
-      flex: 1,
-      child: Column(
-        children: [
-          _buildDropDownList(),
-          const SizedBox(
-            height: 5,
-          ),
-          const CustomDropDownYears()
-        ],
-      ),
-    );
   }
 
   _buildHomeBody() {
@@ -105,22 +41,79 @@ class _HomePageState extends State<HomePage> {
         children: [
           const CustomBackgroundHomePage(),
           const CustomCircle(),
-          Container(
-            margin: const EdgeInsets.only(top: 40),
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                const CustomText(),
-                _buildDropDownBody(),
-                _buildDataList()
-              ],
+          SafeArea(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const CustomText(),
+                  _buildDropDownBody(),
+                  _buildDataList()
+                ],
+              ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  _buildDropDownBody() {
+    return Expanded(
+      flex: 1,
+      child: Column(
+        children: [_buildDropDownList(), const CustomDropDownYears()],
+      ),
+    );
+  }
+
+  _buildDataList() {
+    return Expanded(
+      flex: 3,
+      child: Container(
+          alignment: Alignment.center, child: _buildTheListOfHolidays()),
+    );
+  }
+
+  _buildDropDownList() {
+    return BlocBuilder<CountryCubit, CountryState>(builder: (context, state) {
+      if (state is CountryCodeLoading) {
+        return Container(
+            height: 50,
+            width: double.infinity,
+            alignment: Alignment.centerLeft,
+            decoration: BoxDecoration(
+                color: AppColor.backgroundColor,
+                borderRadius: BorderRadius.circular(20)),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            margin: const EdgeInsets.all(8.0),
+            child: const Text("Loding data ..."));
+      } else if (state is CountryCodeError) {
+        return const Text("Error ...");
+      }
+      if (state is CountryCodeLoded) {
+        return CustomDropDownCountries(
+          listOfCountriesCodeModel: state.listOfCountryCodeModel,
+          title: "Click to choose a city",
+        );
+      }
+      return const SizedBox.shrink();
+    });
+  }
+
+  _buildTheListOfHolidays() {
+    return BlocBuilder<HolidaysCubit, HolidaysCubitState>(
+      builder: (context, state) {
+        if (state is HolidaysLoading) {
+          return Lottie.asset(AppImageAssets.loading);
+        } else if (state is HolidaysLoded) {
+          return HolidaysPage(listOfCountryModel: (state).listOfHolidaysModels);
+        }
+        return Lottie.asset(AppImageAssets.searching, fit: BoxFit.fill);
+      },
     );
   }
 }

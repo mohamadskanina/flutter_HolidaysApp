@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/presentation/screen/home.dart';
 import 'package:myapp/presentation/screen/splashscreen.dart';
-import 'business_logic/cubit/country_cubit.dart';
+import 'business_logic/country_cubit/country_cubit.dart';
+import 'business_logic/holiday_cubit/holidays_cubit_cubit.dart';
 import 'data/repository/country_code_repository.dart';
 import 'data/web_services/country_code_services.dart';
 
@@ -15,8 +16,6 @@ class RouterPages {
     countryCubit = CountryCubit(countryRepository);
   }
 
-  static const String homeRoute = "/";
-
   Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case "/":
@@ -28,8 +27,16 @@ class RouterPages {
         );
       case "/home":
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (BuildContext context) => CountryCubit(countryRepository),
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                  create: (BuildContext context) =>
+                      CountryCubit(countryRepository)),
+              BlocProvider(
+                create: (BuildContext context) =>
+                    HolidaysCubit(countryRepository),
+              ),
+            ],
             child: const HomePage(),
           ),
         );

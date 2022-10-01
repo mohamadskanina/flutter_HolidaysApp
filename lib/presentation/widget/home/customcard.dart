@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:myapp/core/constant/colorapp.dart';
 import 'package:myapp/core/constant/textstyleapp.dart';
-import 'package:myapp/data/models/countrymodel.dart';
+import 'package:myapp/data/models/holiday/holidaymodel.dart';
 import 'package:myapp/presentation/screen/holidaysdetail.dart';
 
 // ignore: must_be_immutable
 class CustomCard extends StatelessWidget {
-  CountryModel countryModel;
+  HolidaysModel countryModel;
   CustomCard({Key? key, required this.countryModel}) : super(key: key);
 
   @override

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:myapp/router_page.dart';
 
 void main() {
-  runApp(MyApp(
+  runApp(HolidaysApp(
     routerPages: RouterPages(),
   ));
 }
 
-class MyApp extends StatelessWidget {
+class HolidaysApp extends StatelessWidget {
   final RouterPages routerPages;
-  const MyApp({Key? key, required this.routerPages}) : super(key: key);
+  const HolidaysApp({Key? key, required this.routerPages}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

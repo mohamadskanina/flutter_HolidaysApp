@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/presentation/widget/splashscreen/custombtn.dart';
+import 'package:lottie/lottie.dart';
 import '../../../core/constant/colorapp.dart';
 import '../../../core/constant/image_assets.dart';
 import '../../../core/constant/textstyleapp.dart';
@@ -36,7 +36,7 @@ class CustomBodySplashScreen extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const Spacer(),
-          const CustomButtom(),
+          Lottie.asset(AppImageAssets.loading),
           const SizedBox(
             height: 30,
           ),

@@ -1,6 +1,6 @@
 import 'package:myapp/core/database/database.dart';
-import 'package:myapp/data/models/countrycodemodel.dart';
-import 'package:myapp/data/models/countrymodel.dart';
+import 'package:myapp/data/models/country/countrycodemodel.dart';
+import 'package:myapp/data/models/holiday/holidaymodel.dart';
 import 'package:myapp/data/web_services/country_code_services.dart';
 
 class CountryCodeRepository {
@@ -12,26 +12,30 @@ class CountryCodeRepository {
     List<dynamic> listOfCountryCodeModel =
         await sqlDb.readData("SELECT * FROM ${SqlDb.countryTable}");
     if (listOfCountryCodeModel.isEmpty) {
-      final country = await countryWebServices.getAllCountryCodeFromApi();
-      if (country.isNotEmpty) {
-        for (var i = 0; i < country.length; i++) {
+      final listOfCountryCodeFromApi =
+          await countryWebServices.getAllCountryCodeFromApi();
+      if (listOfCountryCodeFromApi.isNotEmpty) {
+        for (var i = 0; i < listOfCountryCodeFromApi.length; i++) {
           String qwery =
-              '''INSERT INTO ${SqlDb.countryTable} (${SqlDb.countryName}, ${SqlDb.countryShortName}) VALUES ("${country[i][SqlDb.countryName]}","${country[i][SqlDb.countryShortName]}")''';
+              '''INSERT INTO ${SqlDb.countryTable} (${SqlDb.countryName}, ${SqlDb.countryShortName})
+          VALUES ("${listOfCountryCodeFromApi[i][SqlDb.countryName]}","${listOfCountryCodeFromApi[i][SqlDb.countryShortName]}")''';
           await sqlDb.insertData(qwery);
         }
       }
-      listOfCountryCodeModel =
-          await sqlDb.readData("SELECT * FROM ${SqlDb.countryTable}");
+      return listOfCountryCodeFromApi
+          .map((e) => CountriesCodeModel.fromJson(e))
+          .toList();
     }
+
     return listOfCountryCodeModel
         .map((e) => CountriesCodeModel.fromJson(e))
         .toList();
   }
 
-  Future<List<CountryModel>> getCountryHolidaysFromRepository(
+  Future<List<HolidaysModel>> getCountryHolidaysFromRepository(
       String year, String code) async {
     List<dynamic> country =
         await countryWebServices.getCountryHolidaysFromApi(year, code);
-    return country.map((e) => CountryModel.fromJson(e)).toList();
+    return country.map((e) => HolidaysModel.fromJson(e)).toList();
   }
 }

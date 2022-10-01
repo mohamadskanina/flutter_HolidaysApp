@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:myapp/business_logic/holiday_cubit/holidays_cubit_cubit.dart';
 import 'package:myapp/core/constant/yaers.dart';
-
-import '../../../business_logic/cubit/country_cubit.dart';
 import '../../../core/constant/colorapp.dart';
 import '../../../core/constant/textstyleapp.dart';
 
@@ -14,7 +13,7 @@ class CustomDropDownYears extends StatefulWidget {
 }
 
 class _CustomDropDownYearsState extends State<CustomDropDownYears> {
-  String? val = AppYear.listOfYears.first;
+  String? val; // AppYear.listOfYears.first;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,7 +31,7 @@ class _CustomDropDownYearsState extends State<CustomDropDownYears> {
     return DropdownButton<String>(
       dropdownColor: AppColor.backgroundColor,
       hint: Text(
-        "Chosse Year",
+        "Click to choose a year",
         style: AppTextStyle.smallFont,
       ),
       autofocus: true,
@@ -49,7 +48,7 @@ class _CustomDropDownYearsState extends State<CustomDropDownYears> {
         setState(() {
           val = year;
         });
-        BlocProvider.of<CountryCubit>(context).setYearValue(year!);
+        BlocProvider.of<HolidaysCubit>(context).setYearValue(year!);
       },
       elevation: 4,
       items: AppYear.listOfYears.map((e) {
