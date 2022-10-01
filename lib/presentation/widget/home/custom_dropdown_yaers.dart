@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/business_logic/holiday_cubit/holidays_cubit_cubit.dart';
+import 'package:myapp/core/constant/colorapp.dart';
+import 'package:myapp/core/constant/textstyleapp.dart';
 import 'package:myapp/core/constant/yaers.dart';
-import '../../../core/constant/colorapp.dart';
-import '../../../core/constant/textstyleapp.dart';
 
 class CustomDropDownYears extends StatefulWidget {
   const CustomDropDownYears({Key? key}) : super(key: key);
@@ -43,11 +43,9 @@ class _CustomDropDownYearsState extends State<CustomDropDownYears> {
       ),
       borderRadius: BorderRadius.circular(20),
       iconEnabledColor: AppColor.primaryColor,
-      value: val,
+      value: BlocProvider.of<HolidaysCubit>(context).year,
       onChanged: (year) {
-        setState(() {
-          val = year;
-        });
+        setState(() {});
         BlocProvider.of<HolidaysCubit>(context).setYearValue(year!);
       },
       elevation: 4,

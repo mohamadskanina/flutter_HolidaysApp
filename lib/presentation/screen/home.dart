@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:myapp/business_logic/country_cubit/country_cubit.dart';
 import 'package:myapp/business_logic/holiday_cubit/holidays_cubit_cubit.dart';
-
+import 'package:myapp/core/constant/colorapp.dart';
+import 'package:myapp/core/constant/image_assets.dart';
+import 'package:myapp/core/constant/textstyleapp.dart';
 import 'package:myapp/presentation/widget/home/custom_dropdown_yaers.dart';
 import 'package:myapp/presentation/widget/home/custombackground.dart';
 import 'package:myapp/presentation/widget/home/customcircle.dart';
 import 'package:myapp/presentation/widget/home/customtext.dart';
 import 'package:myapp/presentation/widget/home/dropdown.dart';
-import '../../business_logic/country_cubit/country_cubit.dart';
-import '../../core/constant/colorapp.dart';
-import '../../core/constant/image_assets.dart';
-import '../widget/home/holidays.dart';
+import 'package:myapp/presentation/widget/home/holidays.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -109,11 +109,31 @@ class _HomePageState extends State<HomePage> {
       builder: (context, state) {
         if (state is HolidaysLoading) {
           return Lottie.asset(AppImageAssets.loading);
+        } else if (state is HolidaysEmpty) {
+          return _buildStatusOfHoliday(
+              "Sorry, there are no data for your selection",
+              AppImageAssets.nodata);
         } else if (state is HolidaysLoded) {
           return HolidaysPage(listOfCountryModel: (state).listOfHolidaysModels);
         }
-        return Lottie.asset(AppImageAssets.searching, fit: BoxFit.fill);
+        return _buildStatusOfHoliday(
+            "Start Search by select Value in top", AppImageAssets.arrow);
       },
+    );
+  }
+
+  _buildStatusOfHoliday(String title, String lottie) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Lottie.asset(lottie, width: 250, height: 250),
+        Text(
+          title,
+          style: AppTextStyle.largeFont.copyWith(color: AppColor.primaryColor),
+          textAlign: TextAlign.center,
+        )
+      ],
     );
   }
 }

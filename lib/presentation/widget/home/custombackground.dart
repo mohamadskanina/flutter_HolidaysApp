@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/constant/colorapp.dart';
+import 'package:myapp/core/constant/colorapp.dart';
 
 class CustomBackgroundHomePage extends StatelessWidget {
   const CustomBackgroundHomePage({Key? key}) : super(key: key);

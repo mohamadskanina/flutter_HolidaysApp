@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
-
-import '../../core/constant/colorapp.dart';
+import 'package:myapp/core/constant/colorapp.dart';
 
 class AppTextStyle {
   static TextStyle h1Font = TextStyle(

@@ -8,4 +8,5 @@ class AppImageAssets {
   static const String loading = "$rootAssetsLottie/loading.json";
   static const String nodata = "$rootAssetsLottie/nodata.json";
   static const String searching = "$rootAssetsLottie/searching.json";
+  static const String arrow = "$rootAssetsLottie/arrow.json";
 }

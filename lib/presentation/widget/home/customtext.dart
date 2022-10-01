@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../core/constant/colorapp.dart';
-import '../../../core/constant/textstyleapp.dart';
+import 'package:myapp/core/constant/colorapp.dart';
+import 'package:myapp/core/constant/textstyleapp.dart';
 
 class CustomText extends StatelessWidget {
   const CustomText({Key? key}) : super(key: key);

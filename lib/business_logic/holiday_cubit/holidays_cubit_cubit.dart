@@ -1,15 +1,16 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-
-import '../../data/models/holiday/holidaymodel.dart';
-import '../../data/repository/country_code_repository.dart';
+import 'package:myapp/data/models/holiday/holidaymodel.dart';
+import 'package:myapp/data/repository/app_repository.dart';
 
 part 'holidays_cubit_state.dart';
 
 class HolidaysCubit extends Cubit<HolidaysCubitState> {
   final CountryCodeRepository countryRepository;
-  String code = "US";
-  String year = "2022";
+  String? code;
+  String? year;
+  bool setCode = false;
+  bool setYear = false;
   HolidaysCubit(this.countryRepository) : super(HolidaysCubitInitial());
 
   getCountryHolidaysFromCubit(String code, String yaer) async {
@@ -18,7 +19,11 @@ class HolidaysCubit extends Cubit<HolidaysCubitState> {
       await countryRepository
           .getCountryHolidaysFromRepository(yaer, code)
           .then((listOfHolidays) {
-        emit(HolidaysLoded(listOfHolidays));
+        if (listOfHolidays.isEmpty) {
+          emit(HolidaysEmpty());
+        } else {
+          emit(HolidaysLoded(listOfHolidays));
+        }
       });
     } catch (_) {
       emit(HolidaysError());
@@ -27,11 +32,27 @@ class HolidaysCubit extends Cubit<HolidaysCubitState> {
 
   setCodeValue(String code) {
     this.code = code;
-    getCountryHolidaysFromCubit(code, year);
+    setCode = true;
+    getHolidaysList();
   }
 
   setYearValue(String year) {
     this.year = year;
-    getCountryHolidaysFromCubit(code, year);
+    setYear = true;
+    getHolidaysList();
+  }
+
+  getHolidaysList() {
+    if (setCode && setYear) {
+      getCountryHolidaysFromCubit(code!, year!);
+    }
+  }
+
+  getYearValue() {
+    return year;
+  }
+
+  getCodeValue() {
+    return code;
   }
 }

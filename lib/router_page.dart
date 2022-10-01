@@ -4,8 +4,8 @@ import 'package:myapp/presentation/screen/home.dart';
 import 'package:myapp/presentation/screen/splashscreen.dart';
 import 'business_logic/country_cubit/country_cubit.dart';
 import 'business_logic/holiday_cubit/holidays_cubit_cubit.dart';
-import 'data/repository/country_code_repository.dart';
-import 'data/web_services/country_code_services.dart';
+import 'data/repository/app_repository.dart';
+import 'data/web_services/app_services.dart';
 
 class RouterPages {
   late CountryCodeRepository countryRepository;

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/business_logic/holiday_cubit/holidays_cubit_cubit.dart';
 import 'package:myapp/core/constant/colorapp.dart';
 import 'package:myapp/core/constant/textstyleapp.dart';
-import '../../../data/models/country/countrycodemodel.dart';
+import 'package:myapp/data/models/country/countrycodemodel.dart';
 
 // ignore: must_be_immutable
 class CustomDropDownCountries extends StatefulWidget {
@@ -19,8 +19,6 @@ class CustomDropDownCountries extends StatefulWidget {
 }
 
 class _CustomDropDownCountriesState extends State<CustomDropDownCountries> {
-  String? code;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,12 +49,9 @@ class _CustomDropDownCountriesState extends State<CustomDropDownCountries> {
       ),
       borderRadius: BorderRadius.circular(20),
       iconEnabledColor: AppColor.primaryColor,
-      value: code,
-      onChanged: (newval) {
-        setState(() {
-          code = newval;
-        });
-
+      value: BlocProvider.of<HolidaysCubit>(context).code,
+      onChanged: (code) {
+        setState(() {});
         BlocProvider.of<HolidaysCubit>(context).setCodeValue(code!);
       },
       elevation: 4,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import '../../../core/constant/image_assets.dart';
+import 'package:myapp/core/constant/image_assets.dart';
 
 class CustomBackground extends StatelessWidget {
   const CustomBackground({Key? key}) : super(key: key);

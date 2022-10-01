@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:myapp/data/models/holiday/holidaymodel.dart';
 import 'package:myapp/presentation/widget/home/customcard.dart';
-import '../../../core/constant/image_assets.dart';
-import '../../../data/models/holiday/holidaymodel.dart';
 
 // ignore: must_be_immutable
 class HolidaysPage extends StatefulWidget {
@@ -19,19 +17,19 @@ class _HolidaysPageState extends State<HolidaysPage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       height: MediaQuery.of(context).size.height / 1.4,
-      child: buildBlockWidget(),
+      child: _buildLoadedListWidget(),
     );
   }
 
-  buildBlockWidget() {
-    if (widget.listOfCountryModel.isNotEmpty) {
-      return buildLoadedListWidget();
-    } else {
-      return Lottie.asset(AppImageAssets.nodata);
-    }
-  }
+  // _buildBlockWidget() {
+  //   if (widget.listOfCountryModel.isNotEmpty) {
+  //     return _buildLoadedListWidget();
+  //   } else {
+  //     return Lottie.asset(AppImageAssets.nodata);
+  //   }
+  // }
 
-  buildLoadedListWidget() {
+  _buildLoadedListWidget() {
     return SingleChildScrollView(
       child: SizedBox(
         height: MediaQuery.of(context).size.height / 1.4,

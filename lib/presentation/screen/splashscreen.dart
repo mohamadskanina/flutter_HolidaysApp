@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myapp/business_logic/country_cubit/country_cubit.dart';
 import 'package:myapp/core/constant/colorapp.dart';
-import '../widget/splashscreen/custombackground.dart';
-import '../widget/splashscreen/custombody.dart';
+import 'package:myapp/presentation/widget/splashscreen/custombackground.dart';
+import 'package:myapp/presentation/widget/splashscreen/custombody.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

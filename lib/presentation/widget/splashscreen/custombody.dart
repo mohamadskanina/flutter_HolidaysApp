@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import '../../../core/constant/colorapp.dart';
-import '../../../core/constant/image_assets.dart';
-import '../../../core/constant/textstyleapp.dart';
+import 'package:myapp/core/constant/colorapp.dart';
+import 'package:myapp/core/constant/image_assets.dart';
+import 'package:myapp/core/constant/textstyleapp.dart';
 
 class CustomBodySplashScreen extends StatelessWidget {
   const CustomBodySplashScreen({Key? key}) : super(key: key);

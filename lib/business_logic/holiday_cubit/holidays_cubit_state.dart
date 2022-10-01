@@ -17,3 +17,5 @@ class HolidaysLoded extends HolidaysCubitState {
 class HolidaysLoading extends HolidaysCubitState {}
 
 class HolidaysError extends HolidaysCubitState {}
+
+class HolidaysEmpty extends HolidaysCubitState {}

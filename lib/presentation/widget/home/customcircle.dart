@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/constant/colorapp.dart';
+import 'package:myapp/core/constant/colorapp.dart';
 
 class CustomCircle extends StatelessWidget {
   const CustomCircle({Key? key}) : super(key: key);

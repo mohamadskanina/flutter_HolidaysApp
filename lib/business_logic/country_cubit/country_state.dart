@@ -19,3 +19,8 @@ class CountryCodeError extends CountryState {
   // final List<CountriesCodeModel> listOfCountryCodeModel;
 
 }
+
+class CountryCodeEmpty extends CountryState {
+  // final List<CountriesCodeModel> listOfCountryCodeModel;
+
+}
